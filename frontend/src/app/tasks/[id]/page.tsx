@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactHTMLElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Params {
   id: number;
@@ -17,7 +17,7 @@ export default function TaskDetailPage({ params: ParamsPromise }: { params: Prom
   const {id} = params;
   const [task, setTask] = useState<Task | null>(null);;
   const [name, setName] = useState<string>('');
-  const [status, setStatus] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false); 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -92,7 +92,7 @@ export default function TaskDetailPage({ params: ParamsPromise }: { params: Prom
             <select
               className="w-full mt-1 border p-2 rounded"
               value={status}
-              onChange={(e) => setStatus(e.target.value === 'true')}
+              onChange={(e) => setStatus(e.target.value == "true" ? 'true': 'false')}
             >
               <option value="true">Completed</option>
               <option value="false">Incomplete</option>

@@ -4,6 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Trash } from 'lucide-react';
 
+
+interface Task {
+  id: number;
+  name: string;
+  status: string;
+}
+
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -160,7 +167,7 @@ export default function TaskList() {
         <p className="text-center text-gray-500 mt-8">No tasks found. Add a new task!</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {tasks.map((task: any) => (
+          {tasks.map((task: Task) => (
             <div key={task.id} className="relative">
               <Link href={`/tasks/${task.id}`}>
                 <div className="bg-white shadow-md rounded-2xl p-6 hover:shadow-xl transition-all cursor-pointer">
