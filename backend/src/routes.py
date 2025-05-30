@@ -82,7 +82,7 @@ def update_task(pk):
 
     for field in data:
         if field in fields:
-            setattr(task, field, data[field])
+            setattr(task, field, False if  data[field] == 'false' else True)
     
     db.session.commit()
 
