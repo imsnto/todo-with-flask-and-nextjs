@@ -65,6 +65,7 @@ export default function TaskDetailPage({ params: ParamsPromise }: { params: Prom
           <p><strong>ID:</strong> {task.id}</p>
           <p><strong>Name:</strong> {task.name}</p>
           <p>
+            
             <strong>Status:</strong> {task.status ? 'Completed' : 'Incomplete'}
           </p>
 
@@ -92,7 +93,7 @@ export default function TaskDetailPage({ params: ParamsPromise }: { params: Prom
             <select
               className="w-full mt-1 border p-2 rounded"
               value={status ? 'true' : 'false'}
-              onChange={(e) => setStatus(e.target.value === 'true')}
+              onChange={(e) => setStatus(e.target.value == 'true')}
             >
               <option value="true">Completed</option>
               <option value="false">Incomplete</option>

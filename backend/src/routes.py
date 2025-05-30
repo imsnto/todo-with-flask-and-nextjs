@@ -78,11 +78,17 @@ def update_task(pk):
         }), 404
 
     fields = ['status']
-    data = request.get_json()
+    data = request.get_json() 
+
+    if data['status'] == 'false':
+        data['status'] = False
+    
+    if data['status'] == 'true':
+        data['status'] = True
 
     for field in data:
         if field in fields:
-            setattr(task, field, False if  data[field] == 'false' else True)
+            setattr(task, field, data[field])
     
     db.session.commit()
 
