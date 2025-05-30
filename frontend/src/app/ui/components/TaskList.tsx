@@ -16,6 +16,8 @@ export default function TaskList() {
   const [totalTasks, setTotalTasks] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrev, setHasPrev] = useState(false);
+  
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
     fetchTasks();
@@ -23,7 +25,7 @@ export default function TaskList() {
 
   const fetchTasks = async () => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/tasks?page=${currentPage}&per_page=${perPage}`);
+      const res = await fetch(`${API_BASE_URL}/tasks?page=${currentPage}&per_page=${perPage}`);
       if (!res.ok) {
         throw new Error('Failed to fetch tasks');
       }
@@ -40,9 +42,9 @@ export default function TaskList() {
     }
   };
 
-  const handleAddTask = async (e) => {
+  const handleAddTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await fetch('http://127.0.0.1:5000/tasks', {
+    await fetch(`${API_BASE_URL}/tasks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: newName, status: newStatus }),
@@ -55,7 +57,7 @@ export default function TaskList() {
   };
 
   const handleDelete = async (id: number) => {
-    const res = await fetch(`http://127.0.0.1:5000/tasks/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/tasks/${id}`, {
       method: 'DELETE'
     });
 
