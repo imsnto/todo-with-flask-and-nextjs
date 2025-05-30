@@ -8,4 +8,4 @@ class Task(db.Model):
     status = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return f'<Task {self.title}>'
+        return f'<Task {self.name}>'
