@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 import TaskList from "./ui/components/TaskList"
 
