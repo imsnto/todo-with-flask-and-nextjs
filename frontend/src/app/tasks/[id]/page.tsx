@@ -1,28 +1,40 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { ReactHTMLElement, useEffect, useState } from 'react';
 
-export default function TaskDetailPage({ params: ParamsPromise }) {
+interface Params {
+  id: number;
+}
+
+interface Task {
+  id: number;
+  name: string;
+  status: string;
+}
+
+export default function TaskDetailPage({ params: ParamsPromise }: { params: Promise<Params> }) {
   const params = React.use(ParamsPromise);
-  const [task, setTask] = useState(null);
-  const [name, setName] = useState('');
-  const [status, setStatus] = useState(false);
-  const [message, setMessage] = useState('');
-  const [isEditing, setIsEditing] = useState(false); 
+  const {id} = params;
+  const [task, setTask] = useState<Task | null>(null);;
+  const [name, setName] = useState<string>('');
+  const [status, setStatus] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
+  const [isEditing, setIsEditing] = useState<boolean>(false); 
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/tasks/${params.id}`)
+    fetch(`${API_BASE_URL}/tasks/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setTask(data);
         setName(data.name);
         setStatus(data.status);
       });
-  }, [params.id]);
+  }, [id]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch(`http://127.0.0.1:5000/tasks/${params.id}`, {
+    const res = await fetch(`${API_BASE_URL}/tasks/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
